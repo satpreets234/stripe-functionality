@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Item Page</title>
+</head>
+<body>
+    <h1>Item Details</h1>
+    <div>
+        <img src="http://localhost:8008/uploads/download77.jpeg"/>
+        <h2>Iphone X</h2>
+        <p><strong>Price:</strong> $ 800</p>
+        <p><strong>Description:</strong> Very nyc Mobile</p>
+        <button id="buy-button">Buy Now</button>
+    </div>
+</body>
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+    var stripe=Stripe('pk_test_51LaajgSGKYaLOMebkgLP3NYYqW3jnDPRzBYSkpctNbLwx2AvLoJ0N8oO21PrC9bNxcRPAXXgIpQ0ecCvRypl0hFo00oke2jAxs')
+    const buyItem = async() =>{
+        try {
+            console.log(11);
+            const apiResponse=await fetch('http://localhost:8008/checkout')
+            console.log(apiResponse);
+            let sessionData=await apiResponse.json();
+            console.log(sessionData,8);
+            if(apiResponse.status==200){
+                let createSession= await stripe.redirectToCheckout({
+                    sessionId:sessionData.id,
+                })
+                // stripe.redirectTo
+            }
+        } catch (error) {
+           console.log(error,88); 
+        }
+    }
+    const buyButton=document.getElementById('buy-button').addEventListener('click',buyItem);
+
+</script>
+</html>
