@@ -1,1 +1,4 @@
 /node_modules
+/getting-started-app
+.env.*
+# /getting-started-app
