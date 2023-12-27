@@ -2,7 +2,7 @@ const express = require("express");
 const dotenv = require("dotenv");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const {sequelize} =require('./connection/mongoose-connection')
+const {connection} =require('./connection/mongoose-connection')
 const cookieParser = require("cookie-parser");
 const indexRouter = require("./routers/index");
 const planRouter = require("./routers/plans");
@@ -11,6 +11,8 @@ const app = express();
 const path=require('path')
 const envFile=path.join(__dirname,`.env.${process.env.NODE_ENV}`);
 dotenv.config({path:envFile});
+console.log(envFile);
+console.log(process.env.LST);
 app.use(
   cors({
     origin: "*",
@@ -18,7 +20,8 @@ app.use(
     credentials: true,
   }),
 );
-// connection()
+connection()
+
 app.use(bodyParser.json());
 app.set("view engine", "ejs");
 app.use(cookieParser());
@@ -39,19 +42,18 @@ app.use("/check",(req,res)=>{
 } );
 app.use('/plan',planRouter);
 app.use('/subscription',require('./routers/subscription'));
-app.use('/razorpay',require('./routers/razorpay'));
 app.set("views", __dirname + "/views");
 app.use('/uploads',express.static(path.join(__dirname,'./public')))
 const setPort =  process.env.PORT || 8008;
-sequelize
-  .authenticate()
-  .then(() => {
-    app.listen(setPort, () => {
-      console.log(`App is working on port number ${setPort}...`);
-    });
-  })
-  .catch((err) => {
-    console.log(err);
+// sequelize
+//   .authenticate()
+//   .then(() => {
+   
+//   })
+//   .catch((err) => {
+//     console.log(err);
+//   });
+  app.listen(setPort, () => {
+    console.log(`App is working on port number ${setPort}...`);
   });
-  
 module.exports = app;

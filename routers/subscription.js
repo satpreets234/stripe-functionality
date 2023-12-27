@@ -95,7 +95,7 @@ router.post("/update-subscription", async (req, res) => {
         });
         if(subscription ){
           let subscriptionEndDate=subscription.data[0]?.cancel_at * 1000;
-          let subscriptionId=subscription.data[0]?.id;
+          // let subscriptionId=subscription.data[0]?.id;
           const subscriptionData = await stripe.subscriptions.retrieve(subscription_id);
 
           console.log(subscriptionData.items.data[0].id);

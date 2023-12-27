@@ -309,4 +309,16 @@ router.get("/get-user-stripe-details", async (req, res) => {
   }
 });
 
+const stripeBalance= async () =>{
+  try {
+    const balance =await stripe.balanceTransactions.list({
+      limit: 3,
+    });
+    
+    console.log(balance);
+  } catch (error) {
+    console.log(error);
+  }
+}
+// stripeBalance()
 module.exports = router;
